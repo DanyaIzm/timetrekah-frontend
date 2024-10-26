@@ -14,6 +14,8 @@ import Logo from "../components/Logo";
 import useSWRMutation from "swr/mutation";
 import { mutateFetcher } from "../fetcher";
 import { useNavigate } from "react-router";
+import useAuthContext from "../hooks/use-auth-context";
+import AuthContext from "../contexts/auth-context";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -64,6 +66,8 @@ const LoginPage = (props) => {
 
   const navigate = useNavigate();
 
+  const { login } = React.useContext(AuthContext);
+
   React.useEffect(() => {
     if (error) {
       setErrorMessage(error.info["non_field_errors"]);
@@ -79,7 +83,10 @@ const LoginPage = (props) => {
     const password = data.get("password");
 
     const res = await trigger({ username, password });
-    console.log(res);
+
+    login(res["auth_token"]);
+
+    navigate("/");
   };
 
   return (

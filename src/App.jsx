@@ -1,9 +1,14 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import viteLogo from "/logo.png";
 import { Button } from "@mui/material";
+import AuthContext from "./contexts/auth-context";
+import useUser from "./hooks/use-user";
 
 function App() {
   const [count, setCount] = useState(0);
+
+  const { user } = useUser();
+  const { logout } = useContext(AuthContext);
 
   return (
     <>
@@ -24,7 +29,9 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
-      <Button variant="contained">Aboba</Button>
+      <Button variant="contained" onClick={logout}>
+        Aboba
+      </Button>
     </>
   );
 }
