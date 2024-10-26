@@ -32,6 +32,7 @@ function App() {
       <Button variant="contained" onClick={logout}>
         Aboba
       </Button>
+      {user.username}
     </>
   );
 }

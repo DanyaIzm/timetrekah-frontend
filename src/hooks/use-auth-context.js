@@ -23,7 +23,6 @@ const useAuthContext = () => {
     localStorage.removeItem("token");
     setToken(null);
     trigger();
-    mutate("/auth/users/me", null);
   };
 
   return { token, login, logout };

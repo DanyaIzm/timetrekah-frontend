@@ -8,6 +8,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "../App";
 import ProtectedRoute from "./ProtectedRoute.jsx";
 import OnlyUnauthorizedRoute from "./OnlyUnauthorizedRoute.jsx";
+import { Stack } from "@mui/material";
+import ActivitiesPage from "../pages/ActivitiesPage.jsx";
 
 const Routes = () => {
   const context = useAuthContext();
@@ -26,6 +28,10 @@ const Routes = () => {
       element: <OnlyUnauthorizedRoute Component={LoginPage} />,
     },
     {
+      path: "/activities",
+      element: <ProtectedRoute Component={ActivitiesPage} />,
+    },
+    {
       path: "*",
       element: <ErrorPage />,
     },
@@ -33,7 +39,16 @@ const Routes = () => {
 
   return (
     <AuthContext.Provider value={context}>
-      <RouterProvider router={router} />
+      <Stack
+        direction={"column"}
+        justifyContent={"center"}
+        justifyItems={"center"}
+        alignContent={"center"}
+        alignItems={"center"}
+        height={"100vh"}
+      >
+        <RouterProvider router={router} />
+      </Stack>
     </AuthContext.Provider>
   );
 };

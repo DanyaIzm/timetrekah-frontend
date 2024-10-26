@@ -1,13 +1,17 @@
+import { useContext } from "react";
 import useUser from "../hooks/use-user";
+import AuthContext from "../contexts/auth-context";
+import { CircularProgress } from "@mui/material";
 
 const OnlyUnauthorizedRoute = ({ Component, ...props }) => {
+  const { token } = useContext(AuthContext);
   const { error, isLoading } = useUser();
 
   if (isLoading) {
-    return <>123</>;
+    return <CircularProgress />;
   }
 
-  if (!error) {
+  if (token || !error) {
     window.location = "/";
     return;
   }

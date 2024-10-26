@@ -1,12 +1,19 @@
-import { Navigate, redirect, useNavigate } from "react-router";
 import useUser from "../hooks/use-user";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
+import AuthContext from "../contexts/auth-context";
+import { CircularProgress } from "@mui/material";
 
 const ProtectedRoute = ({ Component, ...props }) => {
+  const { token } = useContext(AuthContext);
   const { user, error, isLoading } = useUser();
 
+  if (!token) {
+    window.location = "/login";
+    return;
+  }
+
   if (isLoading) {
-    return <>123</>;
+    return <CircularProgress />;
   }
 
   if (!user && error) {
