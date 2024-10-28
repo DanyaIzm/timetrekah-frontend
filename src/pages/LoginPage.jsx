@@ -70,7 +70,9 @@ const LoginPage = (props) => {
 
   React.useEffect(() => {
     if (error) {
-      setErrorMessage(error.info["non_field_errors"]);
+      setErrorMessage(
+        error.info ? error.info["non_field_errors"] : navigate("/error")
+      );
     }
   }, [error]);
 

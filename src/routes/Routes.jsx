@@ -32,6 +32,10 @@ const Routes = () => {
       element: <ProtectedRoute Component={ActivitiesPage} />,
     },
     {
+      path: "/error",
+      element: <ErrorPage />,
+    },
+    {
       path: "*",
       element: <ErrorPage />,
     },
