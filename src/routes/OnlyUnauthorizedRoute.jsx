@@ -10,12 +10,8 @@ const OnlyUnauthorizedRoute = ({ Component, ...props }) => {
 
   const navigate = useNavigate();
 
-  console.log("Unprotected", user, token, isLoading);
-
   useEffect(() => {
-    console.log(456);
     if (!isLoading && user) {
-      console.log(654);
       navigate("/");
     }
   }, [token, user, isLoading]);

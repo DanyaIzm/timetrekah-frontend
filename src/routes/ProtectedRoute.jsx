@@ -11,12 +11,7 @@ const ProtectedRoute = ({ Component, ...props }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(123);
-
-    console.log("Protected", user, token, isLoading);
-
     if (!isLoading && !user) {
-      console.log(321);
       navigate("/login");
     }
   }, [token, user, isLoading]);
