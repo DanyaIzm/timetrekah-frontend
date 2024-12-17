@@ -57,6 +57,7 @@ const ActivityCreationForm = () => {
           onChange={(e) => setName(e.target.value)}
           error={!!nameError}
           helperText={nameError}
+          required
         />
         <TextField
           label="Description"
