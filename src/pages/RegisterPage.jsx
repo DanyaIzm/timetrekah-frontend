@@ -132,7 +132,7 @@ const RegisterPage = (props) => {
     return isValid;
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (usernameError || emailError || passwordError) {
@@ -145,7 +145,8 @@ const RegisterPage = (props) => {
     const email = data.get("email");
     const password = data.get("password");
 
-    trigger({ username, email, password });
+    await trigger({ username, email, password });
+    navigate("/login");
   };
 
   return (
