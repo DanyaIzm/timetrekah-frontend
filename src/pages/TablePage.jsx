@@ -28,9 +28,6 @@ const TablePage = () => {
     error: titlesError,
   } = useSWR("/titles", getAuthFetcher(token));
 
-  console.log("act", activitiesData);
-  console.log("titles", titlesData);
-
   const titlesWithActivities = useMemo(() => {
     if (!activitiesData || !titlesData) {
       return [];
@@ -61,14 +58,8 @@ const TablePage = () => {
     return data;
   }, [titlesData, activitiesData]);
 
-  console.log("twa", titlesWithActivities);
-
   if (activitiesAreLoading || titlesAreLoading) {
     return <CircularProgress />;
-  }
-
-  function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
   }
 
   return (
