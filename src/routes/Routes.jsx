@@ -9,7 +9,7 @@ import App from "../App";
 import ProtectedRoute from "./ProtectedRoute.jsx";
 import OnlyUnauthorizedRoute from "./OnlyUnauthorizedRoute.jsx";
 import { Stack } from "@mui/material";
-import ActivitiesPage from "../pages/ActivitiesPage.jsx";
+import TablePage from "../pages/TablePage.jsx";
 
 const Routes = () => {
   const context = useAuthContext();
@@ -28,8 +28,8 @@ const Routes = () => {
       element: <OnlyUnauthorizedRoute Component={LoginPage} />,
     },
     {
-      path: "/activities",
-      element: <ProtectedRoute Component={ActivitiesPage} />,
+      path: "/table",
+      element: <ProtectedRoute Component={TablePage} />,
     },
     {
       path: "/error",
