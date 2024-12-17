@@ -1,37 +1,46 @@
-import React, { useState } from "react";
-import { TextField, Button, Container, Typography } from "@mui/material";
+import React, { useContext, useEffect, useState } from "react";
+import { TextField, Button, Typography, Box } from "@mui/material";
+import useSWRMutation from "swr/mutation";
+import { getAuthMutateFetcher } from "../fetcher";
+import AuthContext from "../contexts/auth-context";
 
 const ActivityCreationForm = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+
+  const [nameError, setNameError] = useState("");
+  const [descriptionError, setDescriptionError] = useState("");
+
+  const { token } = useContext(AuthContext);
+  const { trigger, error } = useSWRMutation(
+    "/activities/",
+    getAuthMutateFetcher(token)
+  );
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     const activityData = { name, description };
 
-    try {
-      const response = await fetch("YOUR_API_ENDPOINT_HERE", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(activityData),
-      });
-
-      if (response.ok) {
-        // Handle success (e.g., show a success message, reset form, etc.)
-        console.log("Activity created successfully");
-        setName("");
-        setDescription("");
-      } else {
-        // Handle error (e.g., show an error message)
-        console.error("Failed to create activity");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
+    await trigger(activityData);
   };
+
+  const errorMapping = {
+    name: (err) => {
+      setNameError(err);
+    },
+    description: (err) => {
+      setDescriptionError(setPasswordErrorMessage, err);
+    },
+  };
+
+  useEffect(() => {
+    if (error) {
+      Object.entries(error.info).forEach(([key, value]) => {
+        errorMapping[key](value);
+      });
+    }
+  }, [error]);
 
   return (
     <>
@@ -46,7 +55,8 @@ const ActivityCreationForm = () => {
           margin="normal"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          required
+          error={!!nameError}
+          helperText={nameError}
         />
         <TextField
           label="Description"
@@ -57,11 +67,14 @@ const ActivityCreationForm = () => {
           rows={4}
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          required
+          error={!!descriptionError}
+          helperText={descriptionError}
         />
-        <Button type="submit" variant="contained" color="primary">
-          Create Activity
-        </Button>
+        <Box display={"flex"} justifyContent={"flex-end"}>
+          <Button type="submit" variant="contained" color="primary">
+            Create Activity
+          </Button>
+        </Box>
       </form>
     </>
   );
