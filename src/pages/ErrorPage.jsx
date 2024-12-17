@@ -16,11 +16,9 @@ const ErrorPage = () => {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        height: "100vh",
+        height: "60vh",
         textAlign: "center",
-        backgroundColor: "#f5f5f5", // Light background color
         padding: "20px",
-        boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)", // Subtle shadow
         borderRadius: "8px", // Rounded corners
         margin: "0 20px", // Margin for responsiveness
       }}
