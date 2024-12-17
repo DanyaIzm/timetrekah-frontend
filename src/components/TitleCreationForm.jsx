@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   TextField,
   Button,
@@ -8,65 +8,106 @@ import {
   Select,
   InputLabel,
   FormControl,
+  CircularProgress,
+  Box,
 } from "@mui/material";
+import AuthContext from "../contexts/auth-context";
+import useSWRMutation from "swr/mutation";
+import {
+  getAuthFetcher,
+  getAuthMutateFetcher,
+  getAuthMutateFetcherRaw,
+} from "../fetcher";
+import useSWR from "swr";
+import { DatePicker } from "@mui/x-date-pickers";
 
 const TitleCreationForm = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
   const [image, setImage] = useState(null);
   const [activityId, setActivityId] = useState("");
-  const [activities, setActivities] = useState([]);
+
+  const [nameError, setNameError] = useState("");
+  const [descriptionError, setDescriptionError] = useState("");
+  const [startDateError, setStartDateError] = useState("");
+  const [endDateError, setEndDateError] = useState("");
+  const [activityError, setActivityError] = useState("");
+
+  const { token } = useContext(AuthContext);
+  const { trigger, error } = useSWRMutation(
+    "/titles/",
+    getAuthMutateFetcher(token)
+  );
+  const { trigger: triggerImage, error: errorImage } = useSWRMutation(
+    "/images/",
+    getAuthMutateFetcherRaw(token)
+  );
+  const { data: activities, isLoading } = useSWR(
+    "/activities/",
+    getAuthFetcher(token)
+  );
+
+  const uploadImage = async (image) => {
+    const formData = new FormData();
+    formData.append("file", image);
+
+    const res = await triggerImage(formData);
+
+    setImage(res);
+
+    console.log(res);
+  };
+
+  const errorMapping = {
+    name: (err) => {
+      setNameError(err);
+    },
+    description: (err) => {
+      setDescriptionError(setPasswordErrorMessage, err);
+    },
+    start_date: (err) => {
+      setStartDateError(err);
+    },
+    end_date: (err) => {
+      setEndDateError(err);
+    },
+    activity: (err) => {
+      setActivityError(err);
+    },
+  };
 
   useEffect(() => {
-    // Fetch activities for the select dropdown
-    const fetchActivities = async () => {
-      try {
-        const response = await fetch("YOUR_ACTIVITY_API_ENDPOINT_HERE");
-        const data = await response.json();
-        setActivities(data); // Assuming the response is an array of activities
-      } catch (error) {
-        console.error("Error fetching activities:", error);
-      }
-    };
+    if (error) {
+      console.log(error.info);
 
-    fetchActivities();
-  }, []);
+      Object.entries(error.info).forEach(([key, value]) => {
+        errorMapping[key](value);
+      });
+    }
+  }, [error]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const formData = new FormData();
-    formData.append("name", name);
-    formData.append("description", description);
-    formData.append("start_date", startDate);
-    formData.append("end_date", endDate);
-    formData.append("image", image);
-    formData.append("activity_id", activityId);
+    const titleData = {
+      name: name,
+      description: description,
+      start_date: startDate?.format("YYYY-MM-DD"),
+      end_date: endDate?.format("YYYY-MM-DD"),
+      image: image.id,
+      activity: activityId,
+    };
 
-    try {
-      const response = await fetch("YOUR_TITLE_API_ENDPOINT_HERE", {
-        method: "POST",
-        body: formData,
-      });
+    console.log(titleData);
 
-      if (response.ok) {
-        console.log("Title created successfully");
-        // Reset form fields
-        setName("");
-        setDescription("");
-        setStartDate("");
-        setEndDate("");
-        setImage(null);
-        setActivityId("");
-      } else {
-        console.error("Failed to create title");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
+    await trigger(titleData);
   };
+
+  if (isLoading) {
+    return <CircularProgress />;
+  }
 
   return (
     <>
@@ -81,7 +122,8 @@ const TitleCreationForm = () => {
           margin="normal"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          required
+          error={!!nameError}
+          helperText={nameError}
         />
         <TextField
           label="Description"
@@ -92,47 +134,47 @@ const TitleCreationForm = () => {
           rows={4}
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          required
+          error={!!descriptionError}
+          helperText={descriptionError}
         />
-        <TextField
+        <DatePicker
           label="Start Date"
-          type="datetime-local"
-          variant="outlined"
-          fullWidth
-          margin="normal"
           value={startDate}
-          onChange={(e) => setStartDate(e.target.value)}
-          required
+          onChange={(newValue) => setStartDate(newValue)}
+          slotProps={{
+            textField: {
+              margin: "normal",
+              fullWidth: true,
+              variant: "outlined",
+              error: !!startDateError,
+              helperText: startDateError,
+            },
+          }}
         />
-        <TextField
+        <DatePicker
           label="End Date"
-          type="datetime-local"
-          variant="outlined"
-          fullWidth
-          margin="normal"
           value={endDate}
-          onChange={(e) => setEndDate(e.target.value)}
-          required
+          onChange={(newValue) => setEndDate(newValue)}
+          error={!!endDateError}
+          helperText={endDateError}
+          slotProps={{
+            textField: {
+              margin: "normal",
+              fullWidth: true,
+              variant: "outlined",
+              error: !!endDateError,
+              helperText: endDateError,
+            },
+          }}
         />
-        <input
-          accept="image/*"
-          style={{ display: "none" }}
-          id="image-upload"
-          type="file"
-          onChange={(e) => setImage(e.target.files[0])}
-        />
-        <label htmlFor="image-upload">
-          <Button variant="contained" component="span" fullWidth>
-            Upload Image
-          </Button>
-        </label>
-        {image && <Typography variant="body2">{image.name}</Typography>}
-        <FormControl fullWidth margin="normal" required>
+        <FormControl fullWidth margin="normal" error={!!activityError}>
           <InputLabel id="activity-select-label">Activity</InputLabel>
           <Select
+            label="Activity"
             labelId="activity-select-label"
             value={activityId}
             onChange={(e) => setActivityId(e.target.value)}
+            required
           >
             {activities.map((activity) => (
               <MenuItem key={activity.id} value={activity.id}>
@@ -141,6 +183,37 @@ const TitleCreationForm = () => {
             ))}
           </Select>
         </FormControl>
+        <input
+          accept="image/*"
+          style={{ display: "none" }}
+          id="image-upload"
+          type="file"
+          onChange={(e) => uploadImage(e.target.files[0])}
+        />
+        <label htmlFor="image-upload">
+          <Button
+            variant="outlined"
+            component="span"
+            fullWidth
+            sx={{ marginY: "16px" }}
+          >
+            Upload Image
+          </Button>
+        </label>
+        {image && (
+          <Box display={"flex"} justifyContent={"center"} margin={"8px"}>
+            <Box
+              component="img"
+              sx={{
+                height: 233,
+                width: 350,
+                maxWidth: { xs: 350, md: 250 },
+              }}
+              alt="The house from the offer."
+              src={image.file}
+            />
+          </Box>
+        )}
         <Button type="submit" variant="contained" color="primary" fullWidth>
           Create Title
         </Button>
