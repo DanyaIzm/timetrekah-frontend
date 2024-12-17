@@ -13,6 +13,8 @@ import TablePage from "../pages/TablePage.jsx";
 import ActivityCreationPage from "../pages/ActivityCreationPage.jsx";
 import TitleCreationPage from "../pages/TitleCreationPage.jsx";
 import TitlePage from "../pages/TitlePage.jsx";
+import Header from "../components/Header.jsx";
+import PageWrapper from "../pages/PageWrapper.jsx";
 
 const Routes = () => {
   const context = useAuthContext();
@@ -20,36 +22,45 @@ const Routes = () => {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <ProtectedRoute Component={App} />,
-    },
-    {
-      path: "/register",
-      element: <OnlyUnauthorizedRoute Component={RegisterPage} />,
-    },
-    {
-      path: "/login",
-      element: <OnlyUnauthorizedRoute Component={LoginPage} />,
-    },
-    {
-      path: "/table",
-      element: <ProtectedRoute Component={TablePage} />,
-    },
-    { path: "/titles/:id", element: <ProtectedRoute Component={TitlePage} /> },
-    {
-      path: "/create-activity",
-      element: <ProtectedRoute Component={ActivityCreationPage} />,
-    },
-    {
-      path: "/create-title",
-      element: <ProtectedRoute Component={TitleCreationPage} />,
-    },
-    {
-      path: "/error",
-      element: <ErrorPage />,
-    },
-    {
-      path: "*",
-      element: <ErrorPage />,
+      element: <PageWrapper />,
+      children: [
+        {
+          path: "/",
+          element: <ProtectedRoute Component={App} />,
+        },
+        {
+          path: "/register",
+          element: <OnlyUnauthorizedRoute Component={RegisterPage} />,
+        },
+        {
+          path: "/login",
+          element: <OnlyUnauthorizedRoute Component={LoginPage} />,
+        },
+        {
+          path: "/table",
+          element: <ProtectedRoute Component={TablePage} />,
+        },
+        {
+          path: "/titles/:id",
+          element: <ProtectedRoute Component={TitlePage} />,
+        },
+        {
+          path: "/create-activity",
+          element: <ProtectedRoute Component={ActivityCreationPage} />,
+        },
+        {
+          path: "/create-title",
+          element: <ProtectedRoute Component={TitleCreationPage} />,
+        },
+        {
+          path: "/error",
+          element: <ErrorPage />,
+        },
+        {
+          path: "*",
+          element: <ErrorPage />,
+        },
+      ],
     },
   ]);
 

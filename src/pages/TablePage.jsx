@@ -15,6 +15,7 @@ import {
   TableRow,
 } from "@mui/material";
 import translateMsToDays from "../utils/ms-to-days";
+import PageLoader from "../components/PageLoader";
 
 const TablePage = () => {
   const { token } = useContext(AuthContext);
@@ -60,7 +61,7 @@ const TablePage = () => {
   }, [titlesData, activitiesData]);
 
   if (activitiesAreLoading || titlesAreLoading) {
-    return <CircularProgress />;
+    return <PageLoader />;
   }
 
   return (

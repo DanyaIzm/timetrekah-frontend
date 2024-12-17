@@ -15,13 +15,19 @@ import useAuthContext from "./hooks/use-auth-context.js";
 import Routes from "./routes/Routes";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import "dayjs/locale/de";
+import Header from "./components/Header.jsx";
+import { createTheme, ThemeProvider } from "@mui/material";
+
+const theme = createTheme();
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <SWRConfig value={{ fetcher }}>
-      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="de">
-        <Routes />
-      </LocalizationProvider>
+      <ThemeProvider theme={theme}>
+        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="de">
+          <Routes />
+        </LocalizationProvider>
+      </ThemeProvider>
     </SWRConfig>
   </StrictMode>
 );
