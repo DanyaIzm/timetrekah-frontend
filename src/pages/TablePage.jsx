@@ -6,6 +6,7 @@ import {
   Box,
   CircularProgress,
   Paper,
+  Stack,
   Table,
   TableBody,
   TableCell,
@@ -63,56 +64,68 @@ const TablePage = () => {
   }
 
   return (
-    <Box display={"flex"}>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }}>
-          <TableHead>
-            <TableRow>
-              <TableCell align="center">Name</TableCell>
-              <TableCell align="center">Description</TableCell>
-              <TableCell align="center">Image</TableCell>
-              <TableCell align="center">Start date</TableCell>
-              <TableCell align="center">End date</TableCell>
-              <TableCell align="center">Days Spent</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {titlesWithActivities.map((activity) => (
-              <React.Fragment key={activity.id}>
-                <TableRow
-                  key={activity.id}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  style={{ backgroundColor: "black" }}
-                >
-                  <TableCell
-                    colSpan={7}
-                    align="center"
-                    style={{ fontWeight: "bold", color: "white" }}
-                  >
-                    {activity.name}
-                  </TableCell>
-                </TableRow>
-                {activity.titles.map((title) => (
+    <Stack
+      direction={"column"}
+      justifyContent={"center"}
+      justifyItems={"center"}
+      alignContent={"center"}
+      alignItems={"center"}
+    >
+      <Box display={"flex"}>
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 650 }}>
+            <TableHead>
+              <TableRow>
+                <TableCell align="center">Name</TableCell>
+                <TableCell align="center">Description</TableCell>
+                <TableCell align="center">Image</TableCell>
+                <TableCell align="center">Start date</TableCell>
+                <TableCell align="center">End date</TableCell>
+                <TableCell align="center">Days Spent</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {titlesWithActivities.map((activity) => (
+                <React.Fragment key={activity.id}>
                   <TableRow
-                    key={title.id}
+                    key={activity.id}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    style={{ backgroundColor: "black" }}
                   >
-                    <TableCell align="center">{title.name}</TableCell>
-                    <TableCell align="center">{title.description}</TableCell>
-                    <TableCell align="center">
-                      <img src={title.image} width="180px" />
+                    <TableCell
+                      colSpan={7}
+                      align="center"
+                      style={{ fontWeight: "bold", color: "white" }}
+                    >
+                      {activity.name}
                     </TableCell>
-                    <TableCell align="center">{title["start_date"]}</TableCell>
-                    <TableCell align="center">{title["end_date"]}</TableCell>
-                    <TableCell align="center">{title["time_spent"]}</TableCell>
                   </TableRow>
-                ))}
-              </React.Fragment>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Box>
+                  {activity.titles.map((title) => (
+                    <TableRow
+                      key={title.id}
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell align="center">{title.name}</TableCell>
+                      <TableCell align="center">{title.description}</TableCell>
+                      <TableCell align="center">
+                        <img src={title.image} width="180px" />
+                      </TableCell>
+                      <TableCell align="center">
+                        {title["start_date"]}
+                      </TableCell>
+                      <TableCell align="center">{title["end_date"]}</TableCell>
+                      <TableCell align="center">
+                        {title["time_spent"]}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </React.Fragment>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Box>
+    </Stack>
   );
 };
 

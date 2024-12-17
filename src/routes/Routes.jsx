@@ -12,6 +12,7 @@ import { Stack } from "@mui/material";
 import TablePage from "../pages/TablePage.jsx";
 import ActivityCreationPage from "../pages/ActivityCreationPage.jsx";
 import TitleCreationPage from "../pages/TitleCreationPage.jsx";
+import TitlePage from "../pages/TitlePage.jsx";
 
 const Routes = () => {
   const context = useAuthContext();
@@ -33,6 +34,7 @@ const Routes = () => {
       path: "/table",
       element: <ProtectedRoute Component={TablePage} />,
     },
+    { path: "/titles/:id", element: <ProtectedRoute Component={TitlePage} /> },
     {
       path: "/create-activity",
       element: <ProtectedRoute Component={ActivityCreationPage} />,
@@ -53,16 +55,7 @@ const Routes = () => {
 
   return (
     <AuthContext.Provider value={context}>
-      <Stack
-        direction={"column"}
-        justifyContent={"center"}
-        justifyItems={"center"}
-        alignContent={"center"}
-        alignItems={"center"}
-        height={"100vh"}
-      >
-        <RouterProvider router={router} />
-      </Stack>
+      <RouterProvider router={router} />
     </AuthContext.Provider>
   );
 };
