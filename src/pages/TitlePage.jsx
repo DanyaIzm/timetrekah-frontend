@@ -59,9 +59,13 @@ const TitlePage = () => {
       justifyContent={"center"}
       justifyItems={"center"}
       alignContent={"center"}
-      padding={4}
+      paddingX={4}
     >
-      <Box display="flex" padding={2}>
+      <Box
+        display="flex"
+        padding={2}
+        sx={{ flexDirection: { xs: "column", sm: "row" }, gap: { xs: 3 } }}
+      >
         {title.image && (
           <Card sx={{ width: 300 }}>
             <CardMedia
