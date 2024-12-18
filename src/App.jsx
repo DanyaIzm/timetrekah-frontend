@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import viteLogo from "/logo.png";
-import { Button } from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
 import AuthContext from "./contexts/auth-context";
 import useUser from "./hooks/use-user";
 
@@ -11,29 +11,16 @@ function App() {
   const { logout } = useContext(AuthContext);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-      <Button variant="contained" onClick={logout}>
-        Aboba
-      </Button>
-      {user.username}
-    </>
+    <Stack
+      justifyContent={"center"}
+      justifyItems={"center"}
+      alignContent={"center"}
+      alignItems={"center"}
+      paddingX={4}
+      paddingTop={12}
+    >
+      <Typography variant="h1">Welcome, {user.username}</Typography>
+    </Stack>
   );
 }
 
