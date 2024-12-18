@@ -14,6 +14,7 @@ import useSWR from "swr";
 import { getAuthFetcher } from "../fetcher";
 import AuthContext from "../contexts/auth-context";
 import TitleCard from "../components/TitleCard";
+import PageLoader from "../components/PageLoader";
 
 const TitlePage = () => {
   const [title, setTitle] = useState(null);
@@ -52,7 +53,7 @@ const TitlePage = () => {
     }
   }, [error]);
 
-  if (isLoading || !title) return <CircularProgress />;
+  if (isLoading || !title) return <PageLoader />;
 
   return (
     <Stack
