@@ -1,4 +1,3 @@
-import * as React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -14,6 +13,9 @@ import Logo from "../components/Logo";
 import useSWRMutation from "swr/mutation";
 import { mutateFetcher } from "../fetcher";
 import { Navigate, redirect, useNavigate } from "react-router";
+import { Alert, Snackbar } from "@mui/material";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import { useEffect, useState } from "react";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -55,12 +57,15 @@ const SignUpContainer = styled(Stack)(({ theme }) => ({
 }));
 
 const RegisterPage = (props) => {
-  const [emailError, setEmailError] = React.useState(false);
-  const [emailErrorMessage, setEmailErrorMessage] = React.useState("");
-  const [passwordError, setPasswordError] = React.useState(false);
-  const [passwordErrorMessage, setPasswordErrorMessage] = React.useState("");
-  const [usernameError, setUsernameError] = React.useState(false);
-  const [usernameErrorMessage, setUsernameErrorMessage] = React.useState("");
+  const [emailError, setEmailError] = useState(false);
+  const [emailErrorMessage, setEmailErrorMessage] = useState("");
+  const [passwordError, setPasswordError] = useState(false);
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
+  const [usernameError, setUsernameError] = useState(false);
+  const [usernameErrorMessage, setUsernameErrorMessage] = useState("");
+
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+
   const navigate = useNavigate();
 
   const { trigger, error } = useSWRMutation("/auth/users/", mutateFetcher);
@@ -84,7 +89,7 @@ const RegisterPage = (props) => {
     },
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (error) {
       Object.entries(error.info).forEach(([key, value]) => {
         errorMapping[key](value);
@@ -143,11 +148,34 @@ const RegisterPage = (props) => {
     const password = data.get("password");
 
     await trigger({ username, email, password });
+
+    setSnackbarOpen(true);
+  };
+
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
     navigate("/login");
   };
 
   return (
     <>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={2000}
+        message="Note archived"
+        onClose={handleSnackbarClose}
+      >
+        <Alert
+          onClose={handleSnackbarClose}
+          severity="success"
+          sx={{ backgroundColor: "#4caf50", color: "white" }}
+          iconMapping={{
+            success: <CheckCircleOutlineIcon fontSize="inherit" />,
+          }}
+        >
+          Nice account you got here! Redirecting now...
+        </Alert>
+      </Snackbar>
       <CssBaseline enableColorScheme />
       <SignUpContainer direction="column" justifyContent="space-between">
         <Card variant="outlined">
