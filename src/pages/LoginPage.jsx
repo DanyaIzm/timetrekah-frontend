@@ -24,7 +24,6 @@ const Card = styled(MuiCard)(({ theme }) => ({
   width: "100%",
   padding: theme.spacing(4),
   gap: theme.spacing(2),
-  margin: "auto",
   boxShadow:
     "hsla(220, 30%, 5%, 0.05) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.05) 0px 15px 35px -5px",
   [theme.breakpoints.up("sm")]: {
@@ -37,8 +36,6 @@ const Card = styled(MuiCard)(({ theme }) => ({
 }));
 
 const SignUpContainer = styled(Stack)(({ theme }) => ({
-  height: "calc((1 - var(--template-frame-height, 0)) * 100dvh)",
-  minHeight: "100%",
   padding: theme.spacing(2),
   [theme.breakpoints.up("sm")]: {
     padding: theme.spacing(4),
@@ -86,7 +83,7 @@ const LoginPage = (props) => {
 
     const res = await trigger({ username, password });
 
-    login(res["auth_token"]);
+    await login(res["auth_token"]);
   };
 
   return (
@@ -142,7 +139,7 @@ const LoginPage = (props) => {
               <span>
                 <Link
                   variant="body2"
-                  sx={{ alignSelf: "center" }}
+                  sx={{ alignSelf: "center", cursor: "pointer" }}
                   onClick={() => navigate("/register")}
                 >
                   Sign up
