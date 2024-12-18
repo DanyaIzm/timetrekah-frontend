@@ -160,7 +160,7 @@ const TablePage = () => {
                         >
                           <Typography
                             variant="body2"
-                            style={{ fontWeight: "bold" }}
+                            style={{ fontWeight: "bold", cursor: "pointer" }}
                           >
                             {title.name}
                           </Typography>

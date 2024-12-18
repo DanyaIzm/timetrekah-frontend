@@ -25,7 +25,7 @@ const ActivitiesPage = () => {
       {activities.map((activity) => (
         <Grid2 size={{ xs: 12, sm: 6, md: 6 }} key={activity.id}>
           <Card
-            sx={{ minHeight: { xs: "100px", sm: "180px" } }}
+            sx={{ minHeight: { xs: "100px", sm: "180px" }, cursor: "pointer" }}
             onClick={() => navigate(`/activities/${activity.id}`)}
           >
             <CardContent>
