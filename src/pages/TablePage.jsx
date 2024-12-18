@@ -18,8 +18,11 @@ import {
 } from "@mui/material";
 import translateMsToDays from "../utils/ms-to-days";
 import PageLoader from "../components/PageLoader";
+import { Navigate, useNavigate } from "react-router";
 
 const TablePage = () => {
+  const navigate = useNavigate();
+
   const isMobile = useMediaQuery("(max-width:600px)");
 
   const { token } = useContext(AuthContext);
@@ -134,6 +137,7 @@ const TablePage = () => {
                       key={activity.id}
                       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                       style={{ backgroundColor: "black" }}
+                      onClick={() => navigate(`/activities/${activity.id}`)}
                     >
                       <TableCell
                         colSpan={7}
@@ -150,7 +154,17 @@ const TablePage = () => {
                           "&:last-child td, &:last-child th": { border: 0 },
                         }}
                       >
-                        <TableCell align="center">{title.name}</TableCell>
+                        <TableCell
+                          align="center"
+                          onClick={() => navigate(`/titles/${title.id}`)}
+                        >
+                          <Typography
+                            variant="body2"
+                            style={{ fontWeight: "bold" }}
+                          >
+                            {title.name}
+                          </Typography>
+                        </TableCell>
                         <TableCell align="center">
                           {title.description}
                         </TableCell>
