@@ -25,7 +25,7 @@ jobs:
       - name: Build project
         run: npm run build && cp dist/index.html dist/404.html
         env:
-          VITE_BACKEND_HOST: ${{ vars.VITE_BACKEND_HOST }}
+          VITE_BACKEND_HOST: ${{ secrets.VITE_BACKEND_HOST }}
 
       - name: Upload production-ready build files
         uses: actions/upload-artifact@v4
