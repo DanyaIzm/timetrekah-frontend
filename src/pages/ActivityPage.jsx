@@ -55,7 +55,7 @@ const ActivityPage = () => {
             name: title.name,
             description: title.description,
             startDate: title.start_date,
-            endDat: title.end_date,
+            endDate: title.end_date,
             image: title.image,
           };
         })
