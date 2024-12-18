@@ -8,6 +8,7 @@ import {
   CardContent,
   Grid2,
 } from "@mui/material";
+import translateMsToDays from "../utils/ms-to-days";
 
 const TitleCard = ({ title, activity }) => {
   return (
@@ -51,6 +52,15 @@ const TitleCard = ({ title, activity }) => {
                   ? new Date(title.endDate).toLocaleDateString()
                   : "Not finished yet"}
               </Typography>
+              {title.endDate && (
+                <Typography variant="body2" color="textSecondary">
+                  Spent:{" "}
+                  {translateMsToDays(
+                    new Date(title.endDate) - new Date(title.startDate)
+                  )}{" "}
+                  days
+                </Typography>
+              )}
               <Link href={`/activities/${title.activity}`} variant="body2">
                 {activity ? activity.name : <CircularProgress size="1rem" />}
               </Link>
