@@ -17,6 +17,7 @@ import Header from "../components/Header.jsx";
 import PageWrapper from "../pages/PageWrapper.jsx";
 import ActivityPage from "../pages/ActivityPage.jsx";
 import HistoryPage from "../pages/HistoryPage.jsx";
+import ActivitiesPage from "../pages/ActivitiesPage.jsx";
 
 const Routes = () => {
   const context = useAuthContext();
@@ -41,6 +42,10 @@ const Routes = () => {
         {
           path: "/table",
           element: <ProtectedRoute Component={TablePage} />,
+        },
+        {
+          path: "/activities",
+          element: <ProtectedRoute Component={ActivitiesPage} />,
         },
         {
           path: "/titles/:id",
