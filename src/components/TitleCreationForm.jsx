@@ -96,9 +96,12 @@ const TitleCreationForm = () => {
       description: description,
       start_date: startDate?.format("YYYY-MM-DD"),
       end_date: endDate?.format("YYYY-MM-DD"),
-      image: image.id,
       activity: activityId,
     };
+
+    if (image) {
+      titleData.image = image.id;
+    }
 
     console.log(titleData);
 

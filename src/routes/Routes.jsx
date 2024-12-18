@@ -16,6 +16,7 @@ import TitlePage from "../pages/TitlePage.jsx";
 import Header from "../components/Header.jsx";
 import PageWrapper from "../pages/PageWrapper.jsx";
 import ActivityPage from "../pages/ActivityPage.jsx";
+import HistoryPage from "../pages/HistoryPage.jsx";
 
 const Routes = () => {
   const context = useAuthContext();
@@ -56,6 +57,10 @@ const Routes = () => {
         {
           path: "/create-title",
           element: <ProtectedRoute Component={TitleCreationPage} />,
+        },
+        {
+          path: "/history",
+          element: <ProtectedRoute Component={HistoryPage} />,
         },
         {
           path: "/error",
