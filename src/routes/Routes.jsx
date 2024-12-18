@@ -22,62 +22,65 @@ import ActivitiesPage from "../pages/ActivitiesPage.jsx";
 const Routes = () => {
   const context = useAuthContext();
 
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <PageWrapper />,
-      children: [
-        {
-          path: "/",
-          element: <ProtectedRoute Component={App} />,
-        },
-        {
-          path: "/register",
-          element: <OnlyUnauthorizedRoute Component={RegisterPage} />,
-        },
-        {
-          path: "/login",
-          element: <OnlyUnauthorizedRoute Component={LoginPage} />,
-        },
-        {
-          path: "/table",
-          element: <ProtectedRoute Component={TablePage} />,
-        },
-        {
-          path: "/activities",
-          element: <ProtectedRoute Component={ActivitiesPage} />,
-        },
-        {
-          path: "/titles/:id",
-          element: <ProtectedRoute Component={TitlePage} />,
-        },
-        {
-          path: "/activities/:id",
-          element: <ProtectedRoute Component={ActivityPage} />,
-        },
-        {
-          path: "/create-activity",
-          element: <ProtectedRoute Component={ActivityCreationPage} />,
-        },
-        {
-          path: "/create-title",
-          element: <ProtectedRoute Component={TitleCreationPage} />,
-        },
-        {
-          path: "/history",
-          element: <ProtectedRoute Component={HistoryPage} />,
-        },
-        {
-          path: "/error",
-          element: <ErrorPage />,
-        },
-        {
-          path: "*",
-          element: <ErrorPage />,
-        },
-      ],
-    },
-  ]);
+  const router = createBrowserRouter(
+    [
+      {
+        path: "/",
+        element: <PageWrapper />,
+        children: [
+          {
+            path: "/",
+            element: <ProtectedRoute Component={App} />,
+          },
+          {
+            path: "/register",
+            element: <OnlyUnauthorizedRoute Component={RegisterPage} />,
+          },
+          {
+            path: "/login",
+            element: <OnlyUnauthorizedRoute Component={LoginPage} />,
+          },
+          {
+            path: "/table",
+            element: <ProtectedRoute Component={TablePage} />,
+          },
+          {
+            path: "/activities",
+            element: <ProtectedRoute Component={ActivitiesPage} />,
+          },
+          {
+            path: "/titles/:id",
+            element: <ProtectedRoute Component={TitlePage} />,
+          },
+          {
+            path: "/activities/:id",
+            element: <ProtectedRoute Component={ActivityPage} />,
+          },
+          {
+            path: "/create-activity",
+            element: <ProtectedRoute Component={ActivityCreationPage} />,
+          },
+          {
+            path: "/create-title",
+            element: <ProtectedRoute Component={TitleCreationPage} />,
+          },
+          {
+            path: "/history",
+            element: <ProtectedRoute Component={HistoryPage} />,
+          },
+          {
+            path: "/error",
+            element: <ErrorPage />,
+          },
+          {
+            path: "*",
+            element: <ErrorPage />,
+          },
+        ],
+      },
+    ],
+    { basename: "/timetrekah-frontend/" }
+  );
 
   return (
     <AuthContext.Provider value={context}>
