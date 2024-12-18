@@ -1,7 +1,7 @@
-const BASE_BACKEND_URL = `http://${window.location.hostname}:8000`;
+const BASE_BACKEND_URL = import.meta.env.VITE_BACKEND_HOST;
 
 export const fetcher = async (url) => {
-  const res = await fetch(BASE_BACKEND_URL + url);
+  const res = await fetch(BASE_BACKEND_URL + url, { credentials: "include" });
 
   if (!res.ok) {
     const error = new Error("An error occurred while fetching the data.");
@@ -17,6 +17,7 @@ export const getAuthFetcher = (token) => {
   return async (url) => {
     const res = await fetch(BASE_BACKEND_URL + url, {
       headers: { Authorization: `Token ${token}` },
+      credentials: "include",
     });
 
     if (!res.ok) {
@@ -37,6 +38,7 @@ export const mutateFetcher = async (url, { arg }) => {
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
   });
 
   if (!res.ok) {
@@ -58,6 +60,7 @@ export const getAuthMutateFetcher = (token) => {
         "Content-Type": "application/json",
         Authorization: `Token ${token}`,
       },
+      credentials: "include",
     });
 
     if (!res.ok) {
@@ -79,6 +82,7 @@ export const getAuthMutateFetcherRaw = (token) => {
       headers: {
         Authorization: `Token ${token}`,
       },
+      credentials: "include",
     });
 
     if (!res.ok) {
