@@ -1,5 +1,7 @@
 const BASE_BACKEND_URL = import.meta.env.VITE_BACKEND_HOST;
 
+console.log(BASE_BACKEND_URL);
+
 export const fetcher = async (url) => {
   const res = await fetch(BASE_BACKEND_URL + url, { credentials: "include" });
 
