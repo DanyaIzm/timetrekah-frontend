@@ -1,15 +1,29 @@
 import React, { useContext, useEffect, useState } from "react";
-import { TextField, Button, Typography, Box } from "@mui/material";
+import {
+  TextField,
+  Button,
+  Typography,
+  Box,
+  Snackbar,
+  Alert,
+} from "@mui/material";
 import useSWRMutation from "swr/mutation";
 import { getAuthMutateFetcher } from "../fetcher";
 import AuthContext from "../contexts/auth-context";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import { useNavigate } from "react-router";
 
 const ActivityCreationForm = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
 
+  const [activityId, setActivityId] = useState(null);
+
   const [nameError, setNameError] = useState("");
   const [descriptionError, setDescriptionError] = useState("");
+
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const navigate = useNavigate();
 
   const { token } = useContext(AuthContext);
   const { trigger, error } = useSWRMutation(
@@ -22,7 +36,10 @@ const ActivityCreationForm = () => {
 
     const activityData = { name, description };
 
-    await trigger(activityData);
+    const result = await trigger(activityData);
+
+    setActivityId(result.id);
+    setSnackbarOpen(true);
   };
 
   const errorMapping = {
@@ -32,6 +49,11 @@ const ActivityCreationForm = () => {
     description: (err) => {
       setDescriptionError(setPasswordErrorMessage, err);
     },
+  };
+
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
+    navigate(`/activities/${activityId}`);
   };
 
   useEffect(() => {
@@ -44,6 +66,22 @@ const ActivityCreationForm = () => {
 
   return (
     <>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={2000}
+        onClose={handleSnackbarClose}
+      >
+        <Alert
+          onClose={handleSnackbarClose}
+          severity="success"
+          sx={{ backgroundColor: "#4caf50", color: "white" }}
+          iconMapping={{
+            success: <CheckCircleOutlineIcon fontSize="inherit" />,
+          }}
+        >
+          Activity is successfully created! Redirecting...
+        </Alert>
+      </Snackbar>
       <Typography variant="h4" gutterBottom>
         Create Activity
       </Typography>
