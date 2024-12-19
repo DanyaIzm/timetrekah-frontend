@@ -2,16 +2,18 @@ import React, { useState, useEffect, useContext } from "react";
 import {
   TextField,
   Button,
-  Container,
   Typography,
   MenuItem,
   Select,
   InputLabel,
+  Snackbar,
+  Alert,
   FormControl,
   CircularProgress,
   Box,
 } from "@mui/material";
 import AuthContext from "../contexts/auth-context";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import useSWRMutation from "swr/mutation";
 import {
   getAuthFetcher,
@@ -20,6 +22,7 @@ import {
 } from "../fetcher";
 import useSWR from "swr";
 import { DatePicker } from "@mui/x-date-pickers";
+import { useNavigate } from "react-router";
 
 const TitleCreationForm = () => {
   const [name, setName] = useState("");
@@ -34,6 +37,11 @@ const TitleCreationForm = () => {
   const [startDateError, setStartDateError] = useState("");
   const [endDateError, setEndDateError] = useState("");
   const [activityError, setActivityError] = useState("");
+
+  const [titleId, setTitleId] = useState(null);
+
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const navigate = useNavigate();
 
   const { token } = useContext(AuthContext);
   const { trigger, error } = useSWRMutation(
@@ -78,10 +86,13 @@ const TitleCreationForm = () => {
     },
   };
 
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
+    navigate(`/titles/${titleId}`);
+  };
+
   useEffect(() => {
     if (error) {
-      console.log(error.info);
-
       Object.entries(error.info).forEach(([key, value]) => {
         errorMapping[key](value);
       });
@@ -103,9 +114,10 @@ const TitleCreationForm = () => {
       titleData.image = image.id;
     }
 
-    console.log(titleData);
+    const result = await trigger(titleData);
 
-    await trigger(titleData);
+    setTitleId(result.id);
+    setSnackbarOpen(true);
   };
 
   if (isLoading) {
@@ -114,6 +126,22 @@ const TitleCreationForm = () => {
 
   return (
     <>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={2000}
+        onClose={handleSnackbarClose}
+      >
+        <Alert
+          onClose={handleSnackbarClose}
+          severity="success"
+          sx={{ backgroundColor: "#4caf50", color: "white" }}
+          iconMapping={{
+            success: <CheckCircleOutlineIcon fontSize="inherit" />,
+          }}
+        >
+          Title is successfully created! Redirecting...
+        </Alert>
+      </Snackbar>
       <Typography variant="h4" gutterBottom>
         Create Title
       </Typography>
