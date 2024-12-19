@@ -162,7 +162,6 @@ const RegisterPage = (props) => {
       <Snackbar
         open={snackbarOpen}
         autoHideDuration={2000}
-        message="Note archived"
         onClose={handleSnackbarClose}
       >
         <Alert
