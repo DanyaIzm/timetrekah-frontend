@@ -3,11 +3,12 @@ import {
   Typography,
   Card,
   CardMedia,
-  Link,
   CircularProgress,
+  Link,
   CardContent,
   Grid2,
 } from "@mui/material";
+import { Link as NavLink } from "react-router-dom";
 import translateMsToDays from "../utils/ms-to-days";
 
 const TitleCard = ({ title, activity }) => {
@@ -61,7 +62,11 @@ const TitleCard = ({ title, activity }) => {
                   days
                 </Typography>
               )}
-              <Link href={`/activities/${title.activity}`} variant="body2">
+              <Link
+                component={NavLink}
+                to={`/activities/${title.activity}`}
+                variant="body2"
+              >
                 {activity ? activity.name : <CircularProgress size="1rem" />}
               </Link>
             </Box>
