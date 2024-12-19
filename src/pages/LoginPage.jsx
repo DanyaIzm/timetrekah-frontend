@@ -84,6 +84,8 @@ const LoginPage = (props) => {
     const res = await trigger({ username, password });
 
     await login(res["auth_token"]);
+
+    navigate("/");
   };
 
   return (
