@@ -272,7 +272,7 @@ const TitleEditPage = () => {
                 width: 350,
                 maxWidth: { xs: 350, md: 250 },
               }}
-              src={image.file}
+              src={image}
             />
           </Box>
         )}
