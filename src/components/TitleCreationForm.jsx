@@ -253,7 +253,6 @@ const TitleCreationForm = () => {
                 width: 350,
                 maxWidth: { xs: 350, md: 250 },
               }}
-              alt="The house from the offer."
               src={image.file}
             />
           </Box>

@@ -74,8 +74,6 @@ const TitleEditPage = () => {
     const res = await triggerImage(formData);
 
     setImage(res);
-
-    console.log(res);
   };
 
   const errorMapping = {
@@ -132,8 +130,6 @@ const TitleEditPage = () => {
       activity: activityId,
     };
 
-    console.log("datatoo", titleData);
-
     if (image) {
       titleData.image = image.id;
     }
@@ -146,9 +142,6 @@ const TitleEditPage = () => {
   if (isLoading || isActivityLoading) {
     return <PageLoader />;
   }
-
-  console.log("sd", startDate);
-  console.log("ed", endDate);
 
   return (
     <Container maxWidth={"sm"}>
@@ -279,7 +272,6 @@ const TitleEditPage = () => {
                 width: 350,
                 maxWidth: { xs: 350, md: 250 },
               }}
-              alt="The house from the offer."
               src={image.file}
             />
           </Box>
