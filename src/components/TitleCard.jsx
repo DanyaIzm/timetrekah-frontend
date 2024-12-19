@@ -79,6 +79,7 @@ const TitleCard = ({ title, activity }) => {
                     sx={{
                       height: { xs: "300px", lg: "400px" },
                       objectFit: "cover",
+                      objectPosition: "top",
                     }}
                     component="img"
                     image={title.image}
