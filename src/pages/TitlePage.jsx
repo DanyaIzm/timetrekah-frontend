@@ -37,6 +37,7 @@ const TitlePage = () => {
   useEffect(() => {
     if (data) {
       setTitle({
+        id: data.id,
         name: data.name,
         description: data.description,
         startDate: data.start_date,
