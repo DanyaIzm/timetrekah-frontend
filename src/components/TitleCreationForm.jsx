@@ -181,6 +181,12 @@ const TitleCreationForm = () => {
               error: !!startDateError,
               helperText: startDateError,
             },
+            field: {
+              clearable: true,
+            },
+            actionBar: {
+              actions: ["clear", "cancel", "accept"],
+            },
           }}
         />
         <DatePicker
@@ -196,6 +202,12 @@ const TitleCreationForm = () => {
               variant: "outlined",
               error: !!endDateError,
               helperText: endDateError,
+            },
+            field: {
+              clearable: true,
+            },
+            actionBar: {
+              actions: ["clear", "cancel", "accept"],
             },
           }}
         />
