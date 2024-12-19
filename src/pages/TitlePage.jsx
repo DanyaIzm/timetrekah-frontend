@@ -50,7 +50,11 @@ const TitlePage = () => {
 
   useEffect(() => {
     if (error) {
-      navigate("/error");
+      if (error.status === 404) {
+        navigate(`/activities`);
+      } else {
+        navigate("/error");
+      }
     }
   }, [error]);
 

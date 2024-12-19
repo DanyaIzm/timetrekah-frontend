@@ -30,7 +30,7 @@ const ActivityPage = () => {
     getAuthFetcher(token)
   );
   const { data: titlesData } = useSWR(
-    activity ? `/titles?activity=${activity.id}` : null,
+    activity ? `/titles/?activity=${activity.id}` : null,
     getAuthFetcher(token)
   );
 
