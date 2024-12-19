@@ -18,6 +18,7 @@ import PageWrapper from "../pages/PageWrapper.jsx";
 import ActivityPage from "../pages/ActivityPage.jsx";
 import HistoryPage from "../pages/HistoryPage.jsx";
 import ActivitiesPage from "../pages/ActivitiesPage.jsx";
+import ActivityEditPage from "../pages/ActivityEditPage.jsx";
 
 const Routes = () => {
   const context = useAuthContext();
@@ -63,6 +64,10 @@ const Routes = () => {
           {
             path: "/create-title",
             element: <ProtectedRoute Component={TitleCreationPage} />,
+          },
+          {
+            path: "/edit-activity/:id",
+            element: <ProtectedRoute Component={ActivityEditPage} />,
           },
           {
             path: "/history",
