@@ -19,6 +19,7 @@ import ActivityPage from "../pages/ActivityPage.jsx";
 import HistoryPage from "../pages/HistoryPage.jsx";
 import ActivitiesPage from "../pages/ActivitiesPage.jsx";
 import ActivityEditPage from "../pages/ActivityEditPage.jsx";
+import TitleEditPage from "../pages/TitleEditPage.jsx";
 
 const Routes = () => {
   const context = useAuthContext();
@@ -68,6 +69,10 @@ const Routes = () => {
           {
             path: "/edit-activity/:id",
             element: <ProtectedRoute Component={ActivityEditPage} />,
+          },
+          {
+            path: "/edit-title/:id",
+            element: <ProtectedRoute Component={TitleEditPage} />,
           },
           {
             path: "/history",

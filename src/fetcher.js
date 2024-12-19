@@ -52,6 +52,8 @@ export const getAuthDestroyFetcher = (token) => {
 
 export const getAuthUpdateFetcher = (token) => {
   return async (url, { arg }) => {
+    console.log(arg);
+
     const res = await fetch(BASE_BACKEND_URL + url + arg.id + "/", {
       method: "PUT",
       body: JSON.stringify(arg),
