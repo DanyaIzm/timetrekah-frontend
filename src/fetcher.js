@@ -31,6 +31,25 @@ export const getAuthFetcher = (token) => {
   };
 };
 
+export const getAuthDestroyFetcher = (token) => {
+  return async (url, { arg }) => {
+    const res = await fetch(BASE_BACKEND_URL + url + arg + "/", {
+      method: "DELETE",
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+      credentials: "include",
+    });
+
+    if (!res.ok) {
+      const error = new Error("An error occurred while fetching the data.");
+      error.info = await res.json();
+      error.status = res.status;
+      throw error;
+    }
+  };
+};
+
 export const mutateFetcher = async (url, { arg }) => {
   const res = await fetch(BASE_BACKEND_URL + url, {
     method: "POST",
