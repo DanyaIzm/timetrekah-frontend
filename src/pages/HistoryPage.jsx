@@ -24,7 +24,7 @@ const HistoryPage = () => {
         };
       });
 
-      const timelineData = generateTimeline("Aboba", "kakulya", titles);
+      const timelineData = generateTimeline("Timetrekah", "Get nostalgic now", titles);
 
       console.log(timelineData);
 
