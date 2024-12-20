@@ -57,7 +57,7 @@ const TablePage = () => {
               time_spent: title.end_date
                 ? translateMsToDays(
                     new Date(title.end_date) - new Date(title.start_date)
-                  )
+                  ) + 1
                 : "Not finished",
             };
           }),
