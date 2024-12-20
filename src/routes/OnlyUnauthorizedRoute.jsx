@@ -3,6 +3,7 @@ import useUser from "../hooks/use-user";
 import AuthContext from "../contexts/auth-context";
 import { CircularProgress } from "@mui/material";
 import { useNavigate } from "react-router";
+import PageLoader from "../components/PageLoader";
 
 const OnlyUnauthorizedRoute = ({ Component, ...props }) => {
   const { token } = useContext(AuthContext);
@@ -17,7 +18,7 @@ const OnlyUnauthorizedRoute = ({ Component, ...props }) => {
   }, [token, user, isLoading]);
 
   if (isLoading) {
-    return <CircularProgress />;
+    return <PageLoader />;
   }
 
   return <Component />;
