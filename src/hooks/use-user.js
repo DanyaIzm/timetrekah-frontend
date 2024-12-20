@@ -7,6 +7,10 @@ import useSWRImmutable from "swr/immutable";
 const useUser = () => {
   const { token } = useContext(AuthContext);
 
+  useEffect(() => {
+    mutate();
+  }, [token]);
+
   const { data, error, isLoading, mutate } = useSWR(
     token ? "/auth/users/me" : null,
     getAuthFetcher(token),
