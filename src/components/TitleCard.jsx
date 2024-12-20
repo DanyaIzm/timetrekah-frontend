@@ -115,7 +115,7 @@ const TitleCard = ({ title, activity }) => {
                     Spent:{" "}
                     {translateMsToDays(
                       new Date(title.endDate) - new Date(title.startDate)
-                    )}{" "}
+                    ) + 1}{" "}
                     days
                   </Typography>
                 )}
