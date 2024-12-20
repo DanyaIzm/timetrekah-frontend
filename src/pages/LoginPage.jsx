@@ -81,9 +81,13 @@ const LoginPage = (props) => {
     const username = data.get("username");
     const password = data.get("password");
 
+    const timeout = setTimeout(() => navigate("/"), 3000);
+
     const res = await trigger({ username, password });
 
     await login(res["auth_token"]);
+
+    clearTimeout(timeout);
 
     navigate("/");
   };
